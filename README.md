@@ -1,6 +1,6 @@
-# HTML Autoclosing Tag to String 🎩 HATS
+# HTML Autoclose Tag to String 🎩 HATS
 
-## A simple no dependencies JS library for building HTML strings.
+**A simple no dependencies JS library for building HTML strings.**
 
 I found myself occasionally writing HTML in little JavaScript strings and
 that felt wrong. All the string concatenation (or interpolation if you're
@@ -8,32 +8,32 @@ using CoffeeScript) was a mess. So I wrote this little library to let you
 write HTML tags in JavaScript, pass attributes in as an object, use a variable
 for the content, etc.
 
-### Examples
+## Examples
 
 _Note: the `h` variable and `H()` function in examples below have slightly 
 different purposes and are user configurable. More on that later._
 
 Comparing HATS and the generated HTML string.
 
-```
+```js
 h.span({id: 'awesome_hat'}, 'Hats are cool.')
 
-'<div id="awesome_hat">Hats are cool.</div>'
+'<span id="awesome_hat">Hats are cool.</span>'
 ```
 
 And of course you can then add the string to your page:
 
-```
+```js
 $('body').html(h.div({id: 'awesome_hat'}))
 ```
 
 A more complex example, this time with a CoffeeScript version too:
 
-```
+```js
 h.div({id: 'main_menu', class: 'menu'},
   H().div({class: 'arrow'}).div({class: 'tooltip'})
-     .div({ class: 'menu_inner' },
-       H().button(h.strong('Important') + 'Settings)
+     .div({class: 'menu_inner'},
+       H().button(h.strong('Important') + 'Settings')
           .button('About')
           .button('Help')
           .s('Main Menu.')
@@ -42,7 +42,7 @@ h.div({id: 'main_menu', class: 'menu'},
 
 h.div {id: 'main_menu', class: 'menu'},
   H().div({class: 'arrow'}).div({class: 'tooltip'})
-     .div { class: 'menu_inner' },
+     .div {class: 'menu_inner'},
        H().button("#{h.strong('Important')} Settings")
           .button('About')
           .button('Help')
@@ -50,8 +50,8 @@ h.div {id: 'main_menu', class: 'menu'},
 
 '<div id="main_menu" class="menu">
   <div class="arrow"></div><div class="tooltip"></div>
-  <div id="menu_inner">
-    <button><strong>Important</strong> Settings</button>
+  <div class="menu_inner">
+    <button><strong>Important</strong>Settings</button>
     <button>About</button>
     <button>Help</button>
     Main Menu.
@@ -63,7 +63,7 @@ h.div {id: 'main_menu', class: 'menu'},
 
 Over 100 HTML tags have corresponding HATS methods, so go wild:
 
-```
+```js
 h.div('What')   // '<div>What</div>'
 h.span('Where') // '<span>Where</span>'
 h.p('When')     // '<p>When</p>'
@@ -75,7 +75,7 @@ h.strong('Why') // '<strong>Why</strong>'
 You can still use a tag that isn't supported (because it's deprecated or 
 bleeding-edge):
 
-```
+```js
 h.tag('blink', {id: 'evil'}, 'Hello, World!')
 
 '<blink id="evil">Hello, World!</blink>'
@@ -83,7 +83,7 @@ h.tag('blink', {id: 'evil'}, 'Hello, World!')
 
 You can use variables in your attributes or content:
 
-```
+```js
 var attrs = {'data-foo': 'bar'}
 var content = 'Mary had a littl lamb.'
 h.p(attrs, content)
@@ -91,7 +91,7 @@ h.p(attrs, content)
 
 You can supply an attributes object, and/or a content string, or neither:
 
-```
+```js
 h.div({id: 'bla'}, 'with attributes') // '<div id="bla">with attributes</div>'
 h.div('without attributes')           // '<div>without attributes</div>'
 h.div({id: 'only_attributes'})        // '<div id="only_attributes"></div>'
@@ -100,7 +100,7 @@ h.div()                               // '<div></div>'
 
 Void elements don't have a closing tag or content:
 
-```
+```js
 h.input({type: 'text', value: 'Name'}) // '<input type="text" value="Name" />'
 h.hr({class: 'divider'})               // '<hr class="divider" />'
 h.br()                                 // '<br />'
@@ -108,13 +108,15 @@ h.br()                                 // '<br />'
 
 The return value is just a string:
 
-```
+```js
 var food = 'I ' + h.strong('really') + ' like pasta!'
+
+var food = 'I <strong>really</strong> like pasta!'
 ```
 
 ### Chained Usage
 
-So, there are 2 modes to HATS, chained and normal. You've seen normal mode in
+There are 2 modes to HATS, chained and normal. You've seen normal mode in
 the section above, that's the `h` variable. It returns a standard string of
 the tag. There is also chained mode where each tag function returns a HATS
 object containing the HTML string built up so far. To end this chain you must
@@ -123,7 +125,7 @@ shorthand `.s()`.
 
 Explicit longform toString:
 
-```
+```js
 H().span('Some text ').strong('is important').toString()
 
 '<span>Some text </span><strong>is important</strong>'
@@ -131,7 +133,7 @@ H().span('Some text ').strong('is important').toString()
 
 Explicit shortform toString:
 
-```
+```js
 H().span('Some text ').strong('is important').s()
 
 '<span>Some text </span><strong>is important</strong>'
@@ -139,7 +141,7 @@ H().span('Some text ').strong('is important').s()
 
 Implicit toString by concatenating:
 
-```
+```js
 H().span('Some text ').strong('is important') + ' but not all.'
 
 '<span>Some text </span><strong>is important</strong> but not all.'
@@ -148,7 +150,7 @@ H().span('Some text ').strong('is important') + ' but not all.'
 There's also a `.text()` function to add text in the chain, and a `.t()` 
 shorthand alias:
 
-```
+```js
 H().t('ello ello ello ').em('what do we ave ere then?').s()
 
 'ello ello ello <em>what do we ave ere then?</em>'
@@ -157,7 +159,7 @@ H().t('ello ello ello ').em('what do we ave ere then?').s()
 Finally you can also add text to the end with the `.s()` function 
 (but only the end as it finishes the chain):
 
-```
+```js
 H().text('1, 2, ').strong('Fizz').s(', 4')
 
 '1, 2, <strong>Fizz</strong>, 4'
@@ -170,11 +172,11 @@ You can nest and mix `h` normal and `H()` chained modes of HATS. If you use the
 be called implicitly for you. I'll repeat the complex example from above to show
 you how HATS calls can be composed:
 
-```
+```js
 h.div({id: 'main_menu', class: 'menu'},
   H().div({class: 'arrow'}).div({class: 'tooltip'})
-     .div({ class: 'menu_inner' },
-       H().button(h.strong('Important') + 'Settings)
+     .div({class: 'menu_inner'},
+       H().button(h.strong('Important') + 'Settings')
           .button('About')
           .button('Help')
           .s('Main Menu.')
@@ -183,7 +185,7 @@ h.div({id: 'main_menu', class: 'menu'},
 
 h.div {id: 'main_menu', class: 'menu'},
   H().div({class: 'arrow'}).div({class: 'tooltip'})
-     .div { class: 'menu_inner' },
+     .div {class: 'menu_inner'},
        H().button("#{h.strong('Important')} Settings")
           .button('About')
           .button('Help')
@@ -191,8 +193,8 @@ h.div {id: 'main_menu', class: 'menu'},
 
 '<div id="main_menu" class="menu">
   <div class="arrow"></div><div class="tooltip"></div>
-  <div id="menu_inner">
-    <button><strong>Important</strong> Settings</button>
+  <div class="menu_inner">
+    <button><strong>Important</strong>Settings</button>
     <button>About</button>
     <button>Help</button>
     Main Menu.
@@ -201,13 +203,13 @@ h.div {id: 'main_menu', class: 'menu'},
 ```
 
 
-### Instalation and Setup
+## Instalation and Setup
 
 1) Download `hats.js` and wear it in your javascripts folder.
 
 2) Define your normal and chaining mode variables:
 
-```
+```js
 window.h = new HATS()
 window.H = function() { return new HATS(true) }
 ```
@@ -220,9 +222,9 @@ You can call `h` and `H` anything, `hat` and `HAT` or `marco` and
 `POLO`; whatever you like.
 
 
-### Development
+## Development
 
-HATS is coded in simple JavaScript, though I use it in a CoffeeScript app.
+HATS is coded in simple JavaScript, but it's great used with CoffeeScript.
 I've tested it in a few different situations in my application (making the odd
 improvement to HATS along the way) so it should work for a variety of real-world 
 use-cases.
