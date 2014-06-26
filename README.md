@@ -237,4 +237,6 @@ built in void tag self closing support according to the
 If you do spot something wrong or there's a feature you'd like added, please 
 open an issue or better send a pull request.
 
+MIT licence.
+
 🎩 
