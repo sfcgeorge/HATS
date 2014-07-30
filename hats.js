@@ -13,7 +13,11 @@ HATS.prototype.tag = function(name, attributes, content) {
   }
 
   var html;
-  if (!!this._self_closing[name]) {
+  var self_closing = false;
+  for (var i = 0; i < h._self_closing.length; i++)
+    if (this._self_closing[i] == name )
+      self_closing = true;
+  if (self_closing) {
     html = '<' + name + this._obj_to_attrs(attributes) + ' />';
   }
   else {
@@ -148,9 +152,7 @@ HATS.prototype.video = function(a, c) { return this.tag('video', a, c) }
 HATS.prototype.wbr = function(a, c) { return this.tag('wbr', a, c) }
 
 HATS.prototype.text = function(text) {
-  if (text) {
-    this._html += text;
-  }
+  if (text) this._html += text;
   return this;
 }
 
@@ -164,16 +166,13 @@ HATS.prototype.toString = function() {
 
 HATS.prototype.s = function(str) {
   var s = this.toString();
-  if (str) {
-    s += str;
-  }
+  if (str) s += str;
   return s;
 }
 
 HATS.prototype._obj_to_attrs = function(obj) {
   var s = '';
-  for (var attr in obj) {
+  for (var attr in obj)
     s += ' ' + attr + '="' + obj[attr] + '"';
-  }
   return s;
 }
