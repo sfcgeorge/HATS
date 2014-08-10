@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <script src="hats.js"></script>
+  </head>
+  <body>
+    <script>
+      h = new HATS();
+      H = function() { return new HATS(true) };
+
+      document.body.innerHTML = h.h1('Hello HATS!') + h.a({ href: 'http://www.something.com' }, 'Something');
+      document.body.innerHTML += H().h1('Chaining HATS!').a({ href: 'http://www.purple.com' }, 'Purple').s();
+    </script>
+  </body>
+</html>
